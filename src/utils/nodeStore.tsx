@@ -1,0 +1,86 @@
+import {
+  Connection,
+  Edge,
+  EdgeChange,
+  Node,
+  NodeChange,
+  addEdge,
+  OnNodesChange,
+  OnEdgesChange,
+  OnConnect,
+  applyNodeChanges,
+  applyEdgeChanges,
+  XYPosition,
+} from 'reactflow';
+
+import initialNodes from './nodes';
+import initialEdges from './edges';
+import { createWithEqualityFn } from 'zustand/traditional';
+import { generateNode } from './nodeGenerator';
+import { nanoid } from 'nanoid';
+type RFState = {
+  nodes: Node[];
+  edges: Edge[];
+  onNodesChange: OnNodesChange;
+  onEdgesChange: OnEdgesChange;
+  onConnect: OnConnect;
+  addChildNode: (parentNodeId: any, position: XYPosition, type: string) => void
+  addNode: (position: XYPosition, type: string) => void
+  
+};
+// this is our useStore hook that we can use in our components to get parts of the store and call actions
+const useStore = createWithEqualityFn<RFState>((set, get) => ({
+  nodes: initialNodes,
+  edges: initialEdges,
+  onNodesChange: (changes: NodeChange[]) => {
+    set({
+      nodes: applyNodeChanges(changes, get().nodes),
+    });
+  },
+  onEdgesChange: (changes: EdgeChange[]) => {
+    set({
+      edges: applyEdgeChanges(changes, get().edges),
+    });
+  },
+  onConnect: (connection: Connection) => {
+    console.log(connection)
+    console.log(get().edges)
+    set({
+      edges: addEdge(connection, get().edges),
+    });
+  },
+  addChildNode: (parentNodeId: any, position: XYPosition, type: string) => {
+    const newNode: Node = {
+      id: nanoid(),
+      type: type,
+      data: { label: 'New Node' },
+      height: 50,
+      width: 50,
+      extent: 'parent',
+      position,
+      parentNode: parentNodeId,
+    };
+   
+     console.log(newNode)
+    set({
+      nodes: [...get().nodes, newNode],
+    });
+  },
+  addNode: (position: XYPosition, type: string) => {
+    const newNode: Node = {
+      id: nanoid(),
+      type: type,
+      data: { label: 'New Node' },
+      height: 50,
+      width: 50,
+      position,
+    };
+   
+     console.log(newNode)
+    set({
+      nodes: [...get().nodes, newNode],
+    });
+  }
+}));
+
+export default useStore;
