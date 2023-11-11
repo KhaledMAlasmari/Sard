@@ -26,7 +26,7 @@ type RFState = {
   onConnect: OnConnect;
   addChildNode: (parentNodeId: any, position: XYPosition, type: string) => void
   addNode: (position: XYPosition, type: string) => void
-  
+
 };
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
 const useStore = createWithEqualityFn<RFState>((set, get) => ({
@@ -60,8 +60,8 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
       position,
       parentNode: parentNodeId,
     };
-   
-     console.log(newNode)
+
+    console.log(newNode)
     set({
       nodes: [...get().nodes, newNode],
     });
@@ -75,8 +75,8 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
       width: 50,
       position,
     };
-   
-     console.log(newNode)
+
+    console.log(newNode)
     set({
       nodes: [...get().nodes, newNode],
     });

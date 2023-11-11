@@ -7,6 +7,7 @@ import {
     ContextMenuItem,
     ContextMenuTrigger,
 } from "@/components/ui/context-menu"
+import BaseNode from './BaseNode';
 
 export type ChapterPropsType = {
     title: string;
@@ -15,27 +16,24 @@ export type ChapterPropsType = {
 function ChapterNode({ data }: NodeProps<ChapterPropsType>) {
     const addChildNode = useStore((state) => state.addChildNode);
     const id = useNodeId()
+    const handleAddingNode = (type: string) => {
+        addChildNode(id, { x: 50, y: 50 }, type)
+    }
     return (
-        <div style={{
-            width: 200,
-            height: 200,
-            background: 'lightpink',
-            borderRadius: 8,
-        }}>
-            <Handle type="target" position={Position.Top} />
+        <BaseNode TextClassName="text-white text-center text-4xl font-bold m-2" title='Chapter' BodyClassName='relative w-96 h-96 bg-pink-800 rounded-lg shadow-lg overflow-hidden'>
             <ContextMenu>
                 <ContextMenuTrigger style={{ display: 'block', width: '100%', height: '100%' }} >
                 </ContextMenuTrigger>
-
                 <ContextMenuContent>
                     {Object.keys(nodeTypes).map((key) => {
-
-                        return <ContextMenuItem onClick={(evt) => { addChildNode(id, { x: 50, y: 50 }, key) }} style={{ textTransform: 'capitalize' }} key={key}>{key}</ContextMenuItem>
+                        if (key != 'chapter') {
+                            return <ContextMenuItem onClick={() => handleAddingNode(key)} style={{ textTransform: 'capitalize' }} key={key}>{key}</ContextMenuItem>
+                        }
                     })}
                 </ContextMenuContent>
             </ContextMenu>
-            <Handle type="source" position={Position.Bottom} />
-        </div>
+        </BaseNode>
+
     );
 };
 

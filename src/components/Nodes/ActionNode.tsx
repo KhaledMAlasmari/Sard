@@ -1,29 +1,34 @@
 import { CSSProperties, useCallback, useState } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { Handle, NodeProps, NodeResizer, Position } from 'reactflow';
 
+import {
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 
+import actions from '../../utils/actions'
+import BaseNode from './BaseNode';
 function ActionNode(props: NodeProps) {
-    const [name, setName] = useState("");
-    const onChange = useCallback((evt: any) => {
-        setName(evt.target.value)
-        console.log(name)
-    }, [name]);
 
+    const [action, setAction] = useState("Action")
+    const handleActionChange = (event: any, action: string) => {
+        setAction(action)
+    }    
     return (
-        <div style={{width: '50px'}}>
-            <Handle type="target" position={Position.Top} />
-            <div>
-                <label style={style} htmlFor="action">Action</label>
-                <input style={{width: '50px'}} id="text" name="action" value={name} onChange={onChange} className="nodrag" />
-            </div>
-            <Handle type="source" position={Position.Bottom}  />
-        </div>
+        <BaseNode TextClassName="text-white text-center text-4sl font-bold"  title='Action' BodyClassName='relative w-24 h-16 bg-gray-800 rounded-lg shadow-lg overflow-hidden'>
+            <ContextMenu>
+                <ContextMenuTrigger className="flex items-center justify-center h-screen text-white text-center text-4sl font-bold"  style={{ width: '100%', height: '100%' }} >
+                    {action}
+                </ContextMenuTrigger>
+                <ContextMenuContent>
+                    {actions.map((key) => {
+                        return <ContextMenuItem key={key} onClick={() => setAction(key)}>{key}</ContextMenuItem>
+                    })}
+                </ContextMenuContent>
+            </ContextMenu>
+        </BaseNode>
     );
-}
-
-const style: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'center'
 }
 export default ActionNode
