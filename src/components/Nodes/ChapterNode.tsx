@@ -20,7 +20,7 @@ function ChapterNode({ data }: NodeProps<ChapterPropsType>) {
         addChildNode(id, { x: 50, y: 50 }, type)
     }
     return (
-        <BaseNode TextClassName="text-white text-center text-4xl font-bold m-2" title='Chapter' BodyClassName='relative w-96 h-96 bg-pink-800 rounded-lg shadow-lg overflow-hidden'>
+        <BaseNode uploadIsAllowed={true} TextClassName="text-white text-center text-4xl font-bold m-2" title='Chapter' BodyClassName='relative w-96 h-96 bg-pink-800 rounded-lg shadow-lg overflow-hidden'>
             <ContextMenu>
                 <ContextMenuTrigger style={{ display: 'block', width: '100%', height: '100%' }} >
                 </ContextMenuTrigger>
