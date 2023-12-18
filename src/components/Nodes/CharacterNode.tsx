@@ -1,14 +1,21 @@
-import { CSSProperties, useCallback, useState } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { CSSProperties, SetStateAction, useCallback, useState } from 'react';
+import { Handle, NodeProps, Position, useNodeId, useNodes, useReactFlow, Node } from 'reactflow';
 import BaseNode from './BaseNode';
+import useStore from '@/utils/nodeStore';
+
+
+export type ChapterPropsType = {
+    node: Node;
+};
 
 
 function CharacterNode(props: NodeProps) {
-    const [name, setName] = useState("");
-    const onChange = useCallback((evt: any) => {
-        setName(evt.target.value)
-        console.log(name)
-    }, [name]);
+    const nodeId = useNodeId()
+    const changeNodeData = useStore(state => state.changeNodeData)
+    const onChange = (evt: any) => {
+        console.log(evt.target.value)
+        changeNodeData(nodeId!, { name: evt.target.value })
+    }
 
     return (
         <BaseNode uploadIsAllowed={true} TextClassName='' title='' BodyClassName="bg-gray-800 p-1 rounded-lg shadow-lg">
@@ -19,6 +26,8 @@ function CharacterNode(props: NodeProps) {
                         type="text"
                         className="w-32 bg-gray-700 text-white py-1 px-1 rounded-md"
                         placeholder="Name"
+                        onInput={onChange}
+                        value={props?.data?.name||""}
                     />
                 </div>
             </div>

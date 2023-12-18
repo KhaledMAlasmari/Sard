@@ -24,8 +24,9 @@ type RFState = {
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  addChildNode: (parentNodeId: any, position: XYPosition, type: string) => void
-  addNode: (position: XYPosition, type: string) => void
+  addChildNode: (parentNodeId: any, position: XYPosition, type: string, data: any) => void
+  addNode: (position: XYPosition, type: string, data: any) => void
+  changeNodeData: (nodeId: string, data: any) => void
 
 };
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
@@ -49,11 +50,11 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
       edges: addEdge(connection, get().edges),
     });
   },
-  addChildNode: (parentNodeId: any, position: XYPosition, type: string) => {
+  addChildNode: (parentNodeId: any, position: XYPosition, type: string, data: any) => {
     const newNode: Node = {
       id: nanoid(),
       type: type,
-      data: { label: 'New Node' },
+      data: data,
       height: 50,
       width: 50,
       extent: 'parent',
@@ -66,11 +67,11 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
       nodes: [...get().nodes, newNode],
     });
   },
-  addNode: (position: XYPosition, type: string) => {
+  addNode: (position: XYPosition, type: string, data: any) => {
     const newNode: Node = {
       id: nanoid(),
       type: type,
-      data: { label: 'New Node' },
+      data: data,
       height: 50,
       width: 50,
       position,
@@ -79,6 +80,22 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
     console.log(newNode)
     set({
       nodes: [...get().nodes, newNode],
+    });
+  },
+  changeNodeData: (nodeId: string, data: any) => {
+    set({
+      nodes: [...get().nodes.map((node) => {
+        if (node.id === nodeId) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              ...data,
+            },
+          };
+        }
+        return node;
+      })],
     });
   }
 }));

@@ -17,7 +17,7 @@ type Props = {
   title: string,
   uploadIsAllowed: boolean
 };
-function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllowed }: Props) {
+function  BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllowed }: Props) {
   const nodeId = useNodeId()
   const instance = useReactFlow();
   const [base64Img, setBase64Img] = useState<String | undefined>("")
@@ -42,15 +42,13 @@ function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllow
   }
   const deleteNode = () => {
     instance.deleteElements({ nodes: [{ id: nodeId! }] });
-    console.log(instance.getNodes());
-    console.log(instance.getEdges());
   }
 
 
   return (
-    <div>
+    <div >
       <Handle type="target" position={Position.Top} />
-      <div className={BodyClassName}>
+      <div id={nodeId!} className={BodyClassName}>
         <button onClick={deleteNode} className={`absolute top-2 right-2 p-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors`} />
         {
           uploadIsAllowed ?
