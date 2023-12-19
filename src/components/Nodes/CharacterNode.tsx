@@ -4,9 +4,6 @@ import BaseNode from './BaseNode';
 import useStore from '@/utils/nodeStore';
 
 
-export type ChapterPropsType = {
-    node: Node;
-};
 
 
 function CharacterNode(props: NodeProps) {
