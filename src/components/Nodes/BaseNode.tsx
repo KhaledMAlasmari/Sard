@@ -59,7 +59,7 @@ function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllow
 
   return (
     <>
-      {title === 'Chapter' ? <NodeResizer onResize={updateHeightAndWidth} /> : null}
+      {title === 'Chapter' ? <NodeResizer minHeight={300} minWidth={300} onResize={updateHeightAndWidth} /> : null}
       <Handle type="target" position={Position.Top} />
       <div ref={node} id={nodeId!} className={BodyClassName} style={{ width: width, height: height }}>
         <button onClick={deleteNode} className={`absolute top-2 right-2 p-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors`} />
