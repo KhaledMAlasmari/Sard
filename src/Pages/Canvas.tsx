@@ -6,6 +6,8 @@ import ReactFlow, {
   ReactFlowProvider,
   ReactFlowInstance,
   XYPosition,
+  useReactFlow,
+  Connection,
 } from 'reactflow';
 
 import nodeTypes from '../utils/NodeTypes'
@@ -17,6 +19,7 @@ import Sidebar from '@/components/Sidebar';
 import styled, { ThemeProvider, } from 'styled-components';
 import { useCallback, useState } from 'react';
 import { darkTheme, lightTheme } from '@/utils/theme';
+import { connectionHasCycle, isValidEdge } from '@/utils/validateEdges';
 
 const selector = (state: any) => ({
   nodes: state.nodes,
@@ -78,6 +81,20 @@ function Canvas() {
   }, []);
 
 
+
+  const isValidConnection = useCallback(
+    (connection: Connection) => {
+      const hasCycle = connectionHasCycle(connection, [...nodes], [...edges]);
+      const validConnection = isValidEdge(connection, [...nodes])
+      if (!hasCycle || !validConnection) {
+        return false;
+      }
+      return true
+    },
+    [nodes, edges],
+  );
+
+
   const onDrop = useCallback(
     (event: { preventDefault: () => void; dataTransfer: { getData: (arg0: string) => any; }; clientX: any; clientY: any; }) => {
       event.preventDefault();
@@ -94,11 +111,7 @@ function Canvas() {
       // details: https://reactflow.dev/whats-new/2023-11-10
       const element = document.elementFromPoint(event.clientX, event.clientY)
       const parent_position = element?.getBoundingClientRect();
-      const parent_position_object: XYPosition = ({
-        x: Number(parent_position?.left),
-        y: Number(parent_position?.top),
-      });
-      const position: XYPosition = ({
+      const position = reactFlowInstance?.screenToFlowPosition({
         x: Number(event.clientX),
         y: Number(event.clientY),
       });
@@ -109,11 +122,11 @@ function Canvas() {
       if (element?.className.includes('chapter')) {
         console.log("wow!!")
         if (data.type === 'copy') {
-          addChildNode(element.id,  { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
+          addChildNode(element.id, { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
         }
         else {
           if (data?.node_info.type === 'action' || data?.node_info.type === 'character') {
-            addChildNode(element.id,  { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
+            addChildNode(element.id, { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
           }
 
         }
@@ -140,7 +153,9 @@ function Canvas() {
           onInit={setReactFlowInstance}
           onDrop={onDrop}
           onDragOver={onDragOver}
-          fitViewOptions={{duration: 1000}}
+          fitViewOptions={{ duration: 1000 }}
+          // @ts-ignore
+          isValidConnection={isValidConnection}
           fitView
         >
           <Sidebar themeState={{ mode, setMode }} />
