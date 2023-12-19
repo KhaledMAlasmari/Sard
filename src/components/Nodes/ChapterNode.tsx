@@ -10,11 +10,7 @@ import {
 import BaseNode from './BaseNode';
 import { useState } from 'react';
 
-export type ChapterPropsType = {
-    title: string;
-};
-
-function ChapterNode({ data }: NodeProps & ChapterPropsType) {
+function ChapterNode({ data }: NodeProps) {
     const id = useNodeId()
 
     return (
