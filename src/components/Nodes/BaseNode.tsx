@@ -14,21 +14,24 @@ import {
 import acceptedFormats from '../../utils/acceptedFormats';
 import { FileUploader } from '../FileUploader';
 import { useRef, useState } from 'react';
+import ImageViewer from '../ImageViewer';
 export type Props = {
   children: JSX.Element;
   BodyClassName: string;
   TextClassName: string;
   title: string;
   uploadIsAllowed: boolean;
-  data?: any
+  nodeData?: any
+  & NodeProps;
 };
-function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllowed }: Props) {
+function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllowed, nodeData }: Props) {
   const nodeId = useNodeId()
   const node = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState<number>(node.current?.offsetWidth!)
   const [height, setHeight] = useState<number>(node.current?.offsetHeight!)
   const instance = useReactFlow();
-  const [base64Img, setBase64Img] = useState<String | undefined>("")
+  const [base64Img, setBase64Img] = useState<string | undefined>(nodeData?.image ? nodeData.image : "")
+  const changeNodeData = useStore(state => state.changeNodeData)
   const handleImageUpload = (file: File) => {
     if (acceptedFormats.includes(file.type)) {
       const reader = new FileReader()
@@ -38,16 +41,12 @@ function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllow
       reader.onload = () => {
         console.log('called: ', reader)
         setBase64Img(reader.result?.toString())
+        changeNodeData(nodeId!, { image: reader.result?.toString() })
       }
     }
   }
 
-  const handleImagePreview = () => {
-    if (base64Img) {
-      let base64_to_imgsrc = Buffer.from(base64Img, "base64").toString()
 
-    }
-  }
   const deleteNode = () => {
     instance.deleteElements({ nodes: [{ id: nodeId! }] });
   }
@@ -67,7 +66,7 @@ function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllow
           uploadIsAllowed ?
             <div>
               <FileUploader handleFile={handleImageUpload} />
-              <button onClick={handleImagePreview} className={`absolute top-2 right-8 p-1 rounded-full bg-blue-500 hover:bg-blue-600 transition-colors`} />
+              <ImageViewer title={title} image={base64Img} />
             </div>
             :
             null

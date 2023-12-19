@@ -113,7 +113,7 @@ function Canvas() {
         }
         else {
           if (data?.node_info.type === 'action' || data?.node_info.type === 'character') {
-            addChildNode(element.id,  { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, { name: null, image: null })
+            addChildNode(element.id,  { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
           }
 
         }
@@ -140,7 +140,8 @@ function Canvas() {
           onInit={setReactFlowInstance}
           onDrop={onDrop}
           onDragOver={onDragOver}
-          fitView={true}
+          fitViewOptions={{duration: 1000}}
+          fitView
         >
           <Sidebar themeState={{ mode, setMode }} />
           <BackgroundStyled />
