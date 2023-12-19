@@ -18,7 +18,7 @@ function ActionNode(props: NodeProps) {
         changeNodeData(nodeId!, { name: name })
     }
     return (
-        <BaseNode uploadIsAllowed={false} TextClassName="text-white text-center text-4sl font-bold"  title='Action' BodyClassName='relative w-24 h-16 bg-gray-800 rounded-lg shadow-lg overflow-hidden'>
+        <BaseNode nodeData={props.data} uploadIsAllowed={false} TextClassName="text-white text-center text-4sl font-bold"  title='Action' BodyClassName='relative w-24 h-16 bg-gray-800 rounded-lg shadow-lg overflow-hidden'>
             <ContextMenu>
                 <ContextMenuTrigger className="flex items-center justify-center h-screen text-white text-center text-4sl font-bold"  style={{ width: '100%', height: '100%' }} >
                     {props?.data?.name||"Action"}

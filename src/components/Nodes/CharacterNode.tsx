@@ -15,7 +15,7 @@ function CharacterNode(props: NodeProps) {
     }
 
     return (
-        <BaseNode uploadIsAllowed={true} TextClassName='' title='' BodyClassName="bg-gray-800 p-1 rounded-lg shadow-lg">
+        <BaseNode nodeData={props.data}  uploadIsAllowed={true} TextClassName='' title='Character' BodyClassName="bg-gray-800 p-1 rounded-lg shadow-lg">
             <div >
                 <h1 className="text-xs text-center text-white font-bold mr-2">Character</h1>
                 <div className="flex items-center justify-center mb-2">
