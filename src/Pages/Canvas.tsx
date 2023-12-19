@@ -8,6 +8,7 @@ import ReactFlow, {
   XYPosition,
   useReactFlow,
   Connection,
+  Node,
 } from 'reactflow';
 
 import nodeTypes from '../utils/NodeTypes'
@@ -119,13 +120,16 @@ function Canvas() {
       console.log(element)
 
       if (element?.className.includes('chapter')) {
-        console.log("wow!!")
+        const parentNodeX = element. getBoundingClientRect().left
+        const parentNodeY = element. getBoundingClientRect().top
+        const x = event.clientX- parentNodeX
+        const y = event.clientY- parentNodeY
         if (data.type === 'copy') {
-          addChildNode(element.id, { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
+          addChildNode(element.id, { x,y}, data?.node_info.type, data?.node_info.data)
         }
         else {
           if (data?.node_info.type === 'action' || data?.node_info.type === 'character') {
-            addChildNode(element.id, { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
+            addChildNode(element.id, {x, y}, data?.node_info.type, data?.node_info.data)
           }
 
         }
