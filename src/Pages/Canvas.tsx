@@ -120,10 +120,16 @@ function Canvas() {
       console.log(element)
 
       if (element?.className.includes('chapter')) {
-        const parentNodeX = element. getBoundingClientRect().left
-        const parentNodeY = element. getBoundingClientRect().top
-        const x = event.clientX- parentNodeX
-        const y = event.clientY- parentNodeY
+        const parentNodeX = element. getBoundingClientRect().x
+        const parentNodeY = element. getBoundingClientRect().y
+        const parentNodeXY = reactFlowInstance?.screenToFlowPosition({
+          x: Number(parentNodeX),
+          y: Number(parentNodeY),
+        });
+        const x = position!.x - parentNodeXY!.x
+        const y =  position!.y - parentNodeXY!.y
+        console.log({ parentNodeX, pos_x: position!.x, newX: x})
+        console.log({ parentNodeY, pos_y: position!.y, newY: y})
         if (data.type === 'copy') {
           addChildNode(element.id, { x,y}, data?.node_info.type, data?.node_info.data)
         }
