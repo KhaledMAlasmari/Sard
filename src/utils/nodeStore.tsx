@@ -44,8 +44,6 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
     });
   },
   onConnect: (connection: Connection) => {
-    console.log(connection)
-    console.log(get().edges)
     set({
       edges: addEdge(connection, get().edges),
     });
