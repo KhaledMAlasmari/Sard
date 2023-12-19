@@ -27,11 +27,13 @@ export type Props = {
 function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllowed, nodeData }: Props) {
   const nodeId = useNodeId()
   const node = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState<number>(node.current?.offsetWidth!)
-  const [height, setHeight] = useState<number>(node.current?.offsetHeight!)
+  const [widthAndHeight, setWidthAndHeight] = useState<{ width: number, height: number }>({ width: node.current?.offsetWidth!, height: node.current?.offsetHeight! })
   const instance = useReactFlow();
   const [base64Img, setBase64Img] = useState<string | undefined>(nodeData?.image ? nodeData.image : "")
   const changeNodeData = useStore(state => state.changeNodeData)
+  const changeNodePosition = useStore(state => state.changeNodePosition)
+  const changeNodeWidthHeight = useStore(state => state.changeNodeWidthHeight)
+  const nodes = useStore(state => state.nodes)
   const handleImageUpload = (file: File) => {
     if (acceptedFormats.includes(file.type)) {
       const reader = new FileReader()
@@ -52,15 +54,30 @@ function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllow
   }
 
   const updateHeightAndWidth = (event: ResizeDragEvent, params: ResizeParamsWithDirection) => {
-    setWidth(params.width)
-    setHeight(params.height)
+    setWidthAndHeight({ width: params.width, height: params.height })
+    updateChildHeightAndWidth(event, params)
+  }
+
+  const updateChildHeightAndWidth = (event: ResizeDragEvent, params: ResizeParamsWithDirection) => {
+    const vp = instance!.getViewport()
+    const parentNode = nodes.find((node: Node) => node.id === nodeId)
+    nodes.forEach((node: Node) => {
+      const xDiff = node.position.x + Number(node.width) - Number(params.width)
+      if (node.parentNode === nodeId && xDiff > 0 && (node.position.x + Number(node.width) > Number(params.width))) {
+        changeNodePosition(node.id, { x: node.position.x - xDiff, y: node.position.y })
+      }
+      const yDiff = node.position.y + Number(node.height) - Number(params.height)
+      if (node.parentNode === nodeId && yDiff > 0 && (node.position.y + Number(node.height) > Number(params.height))) {
+        changeNodePosition(node.id, { x: node.position.x, y: node.position.y - yDiff })
+      }
+    })
   }
 
   return (
     <>
       {title === 'Chapter' ? <NodeResizer minHeight={300} minWidth={300} onResize={updateHeightAndWidth} /> : null}
       <Handle type="target" position={Position.Top} />
-      <div ref={node} id={nodeId!} className={BodyClassName} style={{ width: width, height: height }}>
+      <div ref={node} id={nodeId!} className={BodyClassName} style={{ width: widthAndHeight.width, height: widthAndHeight.height }}>
         <button onClick={deleteNode} className={`absolute top-2 right-2 p-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors`} />
         {
           uploadIsAllowed ?

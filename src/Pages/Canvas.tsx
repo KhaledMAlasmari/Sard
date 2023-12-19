@@ -8,6 +8,7 @@ import ReactFlow, {
   XYPosition,
   useReactFlow,
   Connection,
+  Node,
 } from 'reactflow';
 
 import nodeTypes from '../utils/NodeTypes'
@@ -110,7 +111,6 @@ function Canvas() {
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
       const element = document.elementFromPoint(event.clientX, event.clientY)
-      const parent_position = element?.getBoundingClientRect();
       const position = reactFlowInstance?.screenToFlowPosition({
         x: Number(event.clientX),
         y: Number(event.clientY),
@@ -120,13 +120,22 @@ function Canvas() {
       console.log(element)
 
       if (element?.className.includes('chapter')) {
-        console.log("wow!!")
+        const parentNodeX = element. getBoundingClientRect().x
+        const parentNodeY = element. getBoundingClientRect().y
+        const parentNodeXY = reactFlowInstance?.screenToFlowPosition({
+          x: Number(parentNodeX),
+          y: Number(parentNodeY),
+        });
+        const x = position!.x - parentNodeXY!.x
+        const y =  position!.y - parentNodeXY!.y
+        console.log({ parentNodeX, pos_x: position!.x, newX: x})
+        console.log({ parentNodeY, pos_y: position!.y, newY: y})
         if (data.type === 'copy') {
-          addChildNode(element.id, { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
+          addChildNode(element.id, { x,y}, data?.node_info.type, data?.node_info.data)
         }
         else {
           if (data?.node_info.type === 'action' || data?.node_info.type === 'character') {
-            addChildNode(element.id, { x: (50 + Math.random() * 100), y: (50 + Math.random() * 100) }, data?.node_info.type, data?.node_info.data)
+            addChildNode(element.id, {x, y}, data?.node_info.type, data?.node_info.data)
           }
 
         }

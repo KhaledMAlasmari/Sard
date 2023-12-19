@@ -27,7 +27,7 @@ const NodesDuplicator: React.FC<NodesDuplicatorProps> = () => {
                                         className="flex items-center justify-around w-40 h-12 bg-gray-800 rounded-lg cursor-pointer m-2 text-ellipsis overflow-hidden break-words"
                                         draggable
                                         // @ts-ignore
-                                        onDragStart={(event) => onDragStart(event, JSON.stringify({ type: "copy", node_info: { type: node.type, data: node.data } }))}
+                                        onDragStart={(event) => onDragStart(event, JSON.stringify({height: node.height, width: node.width, type: "copy", node_info: { type: node.type, data: node.data } }))}
                                     >
                                         <div className='flex-1 text-center'>{name}</div>
                                         { /* @ts-ignore */}
