@@ -110,7 +110,6 @@ function Canvas() {
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
       const element = document.elementFromPoint(event.clientX, event.clientY)
-      const parent_position = element?.getBoundingClientRect();
       const position = reactFlowInstance?.screenToFlowPosition({
         x: Number(event.clientX),
         y: Number(event.clientY),

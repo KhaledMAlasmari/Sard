@@ -27,6 +27,8 @@ type RFState = {
   addChildNode: (parentNodeId: any, position: XYPosition, type: string, data: any) => void
   addNode: (position: XYPosition, type: string, data: any) => void
   changeNodeData: (nodeId: string, data: any) => void
+  changeNodePosition: (nodeId: string, poistion: XYPosition) => void
+  changeNodeWidthHeight: (nodeId: string, width: number, height: number) => void
 
 };
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
@@ -90,6 +92,33 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
               ...node.data,
               ...data,
             },
+          };
+        }
+        return node;
+      })],
+    });
+  },
+  changeNodePosition: (nodeId: string, poistion: XYPosition) => {
+    set({
+      nodes: [...get().nodes.map((node) => {
+        if (node.id === nodeId) {
+          return {
+            ...node,
+            position: poistion,
+          };
+        }
+        return node;
+      })],
+    });
+  },
+  changeNodeWidthHeight: (nodeId: string, width: number, height: number) => {
+    set({
+      nodes: [...get().nodes.map((node) => {
+        if (node.id === nodeId) {
+          return {
+            ...node,
+            width: width,
+            height: height,
           };
         }
         return node;
