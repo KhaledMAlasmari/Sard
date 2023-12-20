@@ -16,8 +16,9 @@ import {
 import initialNodes from './nodes';
 import initialEdges from './edges';
 import { createWithEqualityFn } from 'zustand/traditional';
-import { generateNode } from './nodeGenerator';
 import { nanoid } from 'nanoid';
+import { get_story_data } from './story_data_formatter';
+import { isValidStory } from './story_data_validator';
 type RFState = {
   nodes: Node[];
   edges: Edge[];
@@ -29,21 +30,30 @@ type RFState = {
   changeNodeData: (nodeId: string, data: any) => void
   changeNodePosition: (nodeId: string, poistion: XYPosition) => void
   changeNodeWidthHeight: (nodeId: string, width: number, height: number) => void
-
+  genre: string | null;
+  availableGenres: string[] | null
+  //isValidStory: boolean;
+  updateGenre: (genre: string) => void
+  updateAvaliableGenres: (genres: string[]) => void
 };
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
 const useStore = createWithEqualityFn<RFState>((set, get) => ({
   nodes: initialNodes,
   edges: initialEdges,
+  genre: null,
+  availableGenres: null,
+  //isValidStory: false,
   onNodesChange: (changes: NodeChange[]) => {
     set({
       nodes: applyNodeChanges(changes, get().nodes),
     });
+  
   },
   onEdgesChange: (changes: EdgeChange[]) => {
     set({
       edges: applyEdgeChanges(changes, get().edges),
     });
+    
   },
   onConnect: (connection: Connection) => {
     set({
@@ -124,7 +134,17 @@ const useStore = createWithEqualityFn<RFState>((set, get) => ({
         return node;
       })],
     });
-  }
+  },
+  updateGenre: (genre: string) => {
+    set({
+      genre: genre,
+    });
+  },
+  updateAvaliableGenres: (genres: string[]) => {
+    set({
+      availableGenres: genres,
+    });
+  },
 }));
 
 export default useStore;
