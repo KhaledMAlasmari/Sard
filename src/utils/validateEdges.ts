@@ -22,10 +22,11 @@ const connectionHasCycle = (connection: Connection, nodes: Node<any>[], edges: E
 }
 
 
-const isValidEdge = (connection: Connection, nodes: Node<any>[]) => {
+const isValidEdge = (connection: Connection, nodes: Node<any>[], edges: Edge[]) => {
     const sourceNode = nodes.find((node) => node.id === connection.source);
     const targetNode = nodes.find((node) => node.id === connection.target);
-    if(sourceNode?.type === 'chapter' && targetNode?.type === 'chapter'){
+    const connectionToAnotherNode = edges.find(edge => edge.source == connection.source)
+    if(sourceNode?.type === 'chapter' && targetNode?.type === 'chapter' && !connectionToAnotherNode){
         return true;
     }
     if (sourceNode?.type === 'action' && targetNode?.type === "character"){

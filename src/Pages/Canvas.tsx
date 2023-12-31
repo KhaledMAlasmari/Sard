@@ -86,7 +86,7 @@ function Canvas() {
   const isValidConnection = useCallback(
     (connection: Connection) => {
       const hasCycle = connectionHasCycle(connection, [...nodes], [...edges]);
-      const validConnection = isValidEdge(connection, [...nodes])
+      const validConnection = isValidEdge(connection, [...nodes], [...edges])
       if (!hasCycle || !validConnection) {
         return false;
       }

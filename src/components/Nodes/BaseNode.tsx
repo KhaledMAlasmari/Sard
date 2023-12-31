@@ -32,7 +32,6 @@ function BaseNode({ children, BodyClassName, TextClassName, title, uploadIsAllow
   const [base64Img, setBase64Img] = useState<string | undefined>(nodeData?.image ? nodeData.image : "")
   const changeNodeData = useStore(state => state.changeNodeData)
   const changeNodePosition = useStore(state => state.changeNodePosition)
-  const changeNodeWidthHeight = useStore(state => state.changeNodeWidthHeight)
   const nodes = useStore(state => state.nodes)
   const handleImageUpload = (file: File) => {
     if (acceptedFormats.includes(file.type)) {
