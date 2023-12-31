@@ -35,6 +35,12 @@ const isValidEdge = (connection: Connection, nodes: Node<any>[], edges: Edge[]) 
     if (sourceNode?.type == "character" && targetNode?.type == 'action'){
         return true;
     }
+    if (sourceNode?.type == "character" && targetNode?.type == 'relationship'){
+        return true;
+    }
+    if (sourceNode?.type === 'relationship' && targetNode?.type === "character"){
+        return true;
+    }
     return false
 }
 

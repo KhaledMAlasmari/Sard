@@ -134,7 +134,7 @@ function Canvas() {
           addChildNode(element.id, { x,y}, data?.node_info.type, data?.node_info.data)
         }
         else {
-          if (data?.node_info.type === 'action' || data?.node_info.type === 'character') {
+          if (data?.node_info.type === 'action' || data?.node_info.type === 'character'|| data?.node_info.type === 'relationship') {
             addChildNode(element.id, {x, y}, data?.node_info.type, data?.node_info.data)
           }
 
