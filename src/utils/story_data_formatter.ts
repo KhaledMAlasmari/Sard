@@ -23,7 +23,8 @@ const get_story_data = (nodes: Node[], edges: Edge[], genre: string) => {
 
 
 const get_chapter_dynamics = (nodes: Node[], chapter: Node) => {
-    const dynamics = nodes.filter(node => (node.type === "action" && node.parentNode === chapter.id))
+    const dynamicsTypes = ["action", "relationship"]
+    const dynamics = nodes.filter(node => (dynamicsTypes.includes(node.type!) && node.parentNode === chapter.id))
     return dynamics
 }
 
