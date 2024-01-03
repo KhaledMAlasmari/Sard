@@ -9,6 +9,8 @@ interface PreviewStoryProps {
 
 const PreviewStory: React.FC<PreviewStoryProps> = () => {
     const story = useStore((state) => state.generated_story);
+    const stream_output = useStore((state) => state.stream_output);
+    
     /* const story = {
         story: [{
             chapter_id: 1,
@@ -22,16 +24,27 @@ const PreviewStory: React.FC<PreviewStoryProps> = () => {
         }]
     } */
     const waitingForStory = useStore((state) => state.waitingForOutput);
+    if(stream_output != ''){
+        return (
+            <ScrollArea className='flex flex-row flex-wrap h-[40rem]'>
+                <div className="mt-6 mr-2 border-l-2 pl-6 italic">
+                    <blockquote className='whitespace-pre-line'>
+                        {stream_output.trimEnd().trimStart()}
+                    </blockquote>
+                </div>
+            </ScrollArea>
+        )
+    }
     if ((!waitingForStory && story) || story) {
         return (
-            <ScrollArea className='flex flex-row flex-wrap h-[32rem]'>
+            <ScrollArea className='flex flex-row flex-wrap h-[40rem]'>
                 {story.story?.map((chapter) => {
                     return (
                         <div key={chapter.chapter_id}>
-                            <h1 className='text-center m-4 font-bold'>Chapter {chapter.chapter_id+1}</h1>
+                            <h1 className='text-center m-4 font-bold'>Chapter {chapter.chapter_id + 1}</h1>
                             <div className="mt-6 mr-2 border-l-2 pl-6 italic">
-                                <blockquote>
-                                    {chapter.chapter_story}
+                                <blockquote className='whitespace-pre-line'>
+                                    {chapter.chapter_story.trimEnd().trimStart()}
                                 </blockquote>
                             </div>
                         </div>

@@ -13,11 +13,11 @@ const GenreSelector: React.FC<GenreSelectorProps> = () => {
         
     }
     return (
-        <div className="m-8 flex flex-col justify-center">
-            <h1 className="text-2xl font-bold">Genre</h1>
+        <div className="grid grid-rows-2">
+            <h1 className="text-2xl font-bold text-center self-start mt-2">Genre</h1>
             {
                 genres ?
-                    <select onChange={updateGenre} className="bg-gray-800 mt-2 p-2 rounded-lg w-full">
+                    <select onChange={updateGenre} className="bg-gray-800 mt-2 p-2 rounded-lg w-[14rem] h-12 justify-self-center	">
                         {
                             genres.map((genre) => {
                                 return (
@@ -29,7 +29,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = () => {
                         }
                     </select>
                     :
-                    <select defaultValue={"Disabled"} disabled={true} className="bg-gray-800 mt-2 p-2 rounded-lg w-full">
+                    <select defaultValue={"Disabled"} disabled={true} className="bg-gray-800 m-2 p-2 rounded-lg w-32 h-8">
                     </select>
             }
         </div>

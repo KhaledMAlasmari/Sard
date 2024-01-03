@@ -9,6 +9,7 @@ import ReactFlow, {
   useReactFlow,
   Connection,
   Node,
+  Edge,
 } from 'reactflow';
 
 import nodeTypes from '../utils/NodeTypes'
@@ -30,6 +31,8 @@ const selector = (state: any) => ({
   onConnect: state.onConnect,
   addNode: state.addNode,
   addChildNode: state.addChildNode,
+  selectedCanvas: state.selectedCanvas,
+  
 });
 
 const ReactFlowStyled = styled(ReactFlow)`
@@ -38,7 +41,7 @@ const ReactFlowStyled = styled(ReactFlow)`
 
 const MiniMapStyled = styled(MiniMap)`
   background-color: ${(props) => props.theme.bg};
-
+  z-index: 50000;
   .react-flow__minimap-mask {
     fill: ${(props) => props.theme.minimapMaskBg};
   }
@@ -72,7 +75,7 @@ const BackgroundStyled = styled(Background)`
   }
 `;
 function Canvas() {
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, addChildNode, addNode } = useStore(selector, shallow);
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, addChildNode, addNode, selectedCanvas} = useStore(selector, shallow);
   const [mode, setMode] = useState('dark');
   const theme = mode === 'light' ? lightTheme : darkTheme;
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
@@ -95,6 +98,7 @@ function Canvas() {
     [nodes, edges],
   );
 
+  
 
   const onDrop = useCallback(
     (event: { preventDefault: () => void; dataTransfer: { getData: (arg0: string) => any; }; clientX: any; clientY: any; }) => {
@@ -118,7 +122,10 @@ function Canvas() {
       console.log({ position })
       console.log({ drop_x: event.clientX, drop_y: event.clientY })
       console.log(element)
-
+      if (element?.className.includes('react-flow__pane')) {
+        addChildNode(selectedCanvas, position, data?.node_info.type, data?.node_info.data)
+      }
+      /*
       if (element?.className.includes('chapter')) {
         const parentNodeX = element. getBoundingClientRect().x
         const parentNodeY = element. getBoundingClientRect().y
@@ -145,6 +152,7 @@ function Canvas() {
           addNode(position, data?.node_info.type, { name: null, image: null, title: "Chapter Title" })
         }
       }
+      */
     },
     [reactFlowInstance],
   );
@@ -165,7 +173,6 @@ function Canvas() {
           fitViewOptions={{ duration: 1000 }}
           // @ts-ignore
           isValidConnection={isValidConnection}
-          fitView
         >
           <Sidebar themeState={{ mode, setMode }} />
           <BackgroundStyled />

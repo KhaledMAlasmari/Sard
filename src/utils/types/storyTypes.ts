@@ -31,6 +31,7 @@ type StoryObject = {
 
 type Story = {
     genre: string | null;
+    storyType: string;
     chapters: Chapter[];
 }
 

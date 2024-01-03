@@ -40,6 +40,10 @@ function ActionNode(props: NodeProps) {
             changeNodeData(nodeId!, { name: name });
         }
     };
+
+    const changeInputValue = (event: { target: { value: any; }; }) => {
+        setInputValue(event.target.value)
+    }
     const inputStyles: React.CSSProperties = {
         width: '8rem', // w-32
         backgroundColor: '#2D3748', // bg-gray-700
@@ -56,25 +60,27 @@ function ActionNode(props: NodeProps) {
                         props?.data?.name || "Action"
                     ) : (
 
-                            <input
-                                type="text"
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
-                                onBlur={handleBlur}
-                                onKeyPress={handleKeyPress}
-                                autoFocus
-                                className="w-20 bg-gray-700 text-white py-1 px-1 rounded-md" // Added ml-4 for left margin
-                                placeholder="Action"
-                            />
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={changeInputValue}
+                            onBlur={handleBlur}
+                            onKeyDown={handleKeyPress}
+                            autoFocus
+                            className="w-20 bg-gray-700 text-white py-1 px-1 rounded-md" // Added ml-4 for left margin
+                            placeholder="Action"
+                        />
                     )}
                 </ContextMenuTrigger>
                 <ContextMenuContent>
-                    {actions.map((key) => (
-                        <ContextMenuItem key={key} onClick={() => onClick(key)}>
-                            {key}
-                        </ContextMenuItem>
-                    ))}
-                    <ContextMenuItem onClick={() => onClick('Custom')}>
+                    {actions.map((key) => {
+                        return (
+                            <ContextMenuItem key={key} onClick={() => onClick(key)}>
+                                {key}
+                            </ContextMenuItem>
+                        )
+                    })}
+                    <ContextMenuItem key='custom' onClick={() => onClick('Custom')}>
                         Custom
                     </ContextMenuItem>
                 </ContextMenuContent>

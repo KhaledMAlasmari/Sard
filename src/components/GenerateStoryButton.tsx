@@ -24,11 +24,12 @@ const GenerateStoryButton: React.FC<GenerateStoryButtonProps> = () => {
     const nodes = useStore((state) => state.nodes)
     const edges = useStore((state) => state.edges)
     const genre = useStore((state) => state.genre)
+    const storyType = useStore((state) => state.storyType)
     const sendStoryToBackend = useSocketsStore((state) => state.actions.generateStory)
     const resetStory = useSocketsStore((state) => state.resetStory)
     const [validStory, setValidStory] = useState(false)
     const generateStory = (event: { preventDefault: () => void; }) => {
-        const storyData = get_story_data(nodes, edges, genre || "")
+        const storyData = get_story_data(nodes, edges, genre || "", storyType)
         const storyValidationResult = isValidStory(storyData)
         console.log(storyValidationResult)
         if (storyValidationResult !== true) {
@@ -43,12 +44,17 @@ const GenerateStoryButton: React.FC<GenerateStoryButtonProps> = () => {
         }
     }
 
+    const invalidStoryReasons = {
+        "Free": "Please make sure you have at least one complete event in all of your boards \n(with at least two characters and an action/relationship connecting them) in your story.\nAlso, make sure none of your characters or actions/relationships are unnamed.",
+        "Three": "Please make sure you have at least three boards to fit your selected story structure, one complete event in all of your boards (with at least two characters and an action/relationship connecting them) in your story.\nAlso, make sure none of your characters or actions/relationships are unnamed.",
+        "Five": "Please make sure you have at least five boards to fit your selected story structure, one complete event in all of your boards (with at least two characters and an action/relationship connecting them) in your story.\nAlso, make sure none of your characters or actions/relationships are unnamed.",
+    }
     return (
         // Add your JSX code here
         <Dialog>
             <DialogTrigger asChild>
                 <div className='flex justify-center items-center w-full'>
-                    <button onClick={generateStory} className="bg-blue-600 text-white py-2 px-4 rounded-lg w-full ">Generate story</button>
+                    <button onClick={generateStory} className="bg-blue-600 text-white py-2 px-4 rounded-lg  w-[14rem] m-4 ">Generate story</button>
                 </div>
             </DialogTrigger>
             {
@@ -68,8 +74,12 @@ const GenerateStoryButton: React.FC<GenerateStoryButtonProps> = () => {
                             <DialogTitle>Incomplete story</DialogTitle>
                         </DialogHeader>
                         <>
-                            Please make sure you have at least one complete event in all of your chapters (with at least two characters and an action connecting them) in your story.<br />
-                            Also, make sure none of your characters or actions are unnamed.
+                            <p>
+                                {
+                                    // @ts-ignore
+                                    invalidStoryReasons[storyType]
+                                }
+                            </p>
                         </>
                     </DialogContent>
             }
