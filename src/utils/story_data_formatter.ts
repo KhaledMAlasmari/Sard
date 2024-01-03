@@ -146,7 +146,7 @@ const get_next_chapter = (chapters: Node[], edges: Edge[], previous_chapter: Nod
 }
 
 
-const format_chapter = (chapter: Node, index: Number, nodes: Node[], edges: Edge[]) => {
+const format_chapter = (chapter: Node, index: number, nodes: Node[], edges: Edge[]) => {
     const dynamics = get_chapter_dynamics(nodes, chapter)
     const events = get_chapter_events(nodes, edges, dynamics, chapter)
     return {
