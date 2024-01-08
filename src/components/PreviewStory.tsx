@@ -41,7 +41,7 @@ const PreviewStory: React.FC<PreviewStoryProps> = () => {
                 {story.story?.map((chapter) => {
                     return (
                         <div key={chapter.chapter_id}>
-                            <h1 className='text-center m-4 font-bold'>Chapter {chapter.chapter_id + 1}</h1>
+                            <h1 className='text-center m-4 font-bold'>Chapter {chapter.chapter_id}</h1>
                             <div className="mt-6 mr-2 border-l-2 pl-6 italic">
                                 <blockquote className='whitespace-pre-line'>
                                     {chapter.chapter_story.trimEnd().trimStart()}

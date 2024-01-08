@@ -28,11 +28,11 @@ const Sidebar = ({ themeState }: props) => {
     return (
         <Collapsible onOpenChange={setIsOpen}
             open={isOpen}>
-            <Panel position="top-right">
-                <CollapsibleTrigger style={isOpen ? { "visibility": "hidden" } : {}} asChild><Button className="rotate-90 mr-[-2rem]" variant="secondary">Menu</Button></CollapsibleTrigger>
+            <Panel position="top-left" style={{ margin: '0px',}}>
+                <CollapsibleTrigger style={isOpen ? { "visibility": "hidden" } : {}} asChild><Button  variant="secondary">Menu</Button></CollapsibleTrigger>
             </Panel>
-            <CollapsibleContent className="animate-in slide-in-from-right" >
-                <Panel  position="top-right" style={{ margin: '0px', zIndex: '50001' }} className="flex flex-col bg-gray-900 text-white h-screen w-6/12">
+            <CollapsibleContent className="animate-in slide-in-from-left" >
+                <Panel  position="top-left" style={{ margin: '0px', zIndex: '50001' }} className="flex flex-col bg-gray-900 text-white h-screen w-6/12">
                     <div className="h-8">
                         <button onClick={() => setIsOpen(!isOpen)} className={`absolute top-2 left-2 p-2 rounded-full bg-red-500 hover:bg-red-600 transition-colors`} />
                     </div>
