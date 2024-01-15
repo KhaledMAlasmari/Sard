@@ -7,6 +7,10 @@ const isValidStory = (story: Story): boolean => {
         return false
     }
     
+    if((story.storyType === 'Three' && story.chapters.length !== 3) || (story.storyType === 'Five' && story.chapters.length !== 5)) {
+        return false
+    }
+    
     for (const chapter of story.chapters) {
         if (chapter.events.length === 0) {
             return false

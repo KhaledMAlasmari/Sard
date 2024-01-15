@@ -6,6 +6,7 @@ import { GeneratedStory, Story } from "./types/storyTypes";
 
 interface IStoryState {
     generated_story: GeneratedStory | null
+    stream_output: string
     socketIsOpen: boolean;
     waitingForOutput: boolean
 }
@@ -20,6 +21,7 @@ interface IStoryState {
 */
 const initialState: IStoryState = {
     generated_story: null,
+    stream_output: '',
     socketIsOpen: false,
     waitingForOutput: false,
 };
@@ -46,6 +48,9 @@ const mutations = (setState: (state: Partial<IStoryState>) => void, getState: ()
             console.log({data})
             setState({ generated_story: data });
             setState({ waitingForOutput: false });
+        })
+        .on("stream_output", (data: {output: string}) => {
+            setState({ stream_output: data.output });
         })
 
 

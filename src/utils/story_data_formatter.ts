@@ -1,18 +1,16 @@
 import { Edge, Node } from "reactflow"
 import { Chapter, Story, StoryEvent, StoryObject, StorySubject } from "./types/storyTypes"
 
-const get_story_data = (nodes: Node[], edges: Edge[], genre: string) => {
+const get_story_data = (nodes: Node[], edges: Edge[], genre: string, storyType: string) => {
     const story: Story = {
         genre: genre,
+        storyType: storyType,
         chapters: []
     }
 
-    const unorderedChapters = get_chapters(nodes)
-    const orderedChapters = order_chapters(unorderedChapters, edges)
-    const isOrdered = orderedChapters.length > 0 
-    const chapters = isOrdered ? orderedChapters : unorderedChapters
+    const chapters = get_chapters(nodes)
     chapters.forEach((chapter, index) => {
-        story.chapters.push(format_chapter(chapter, index, nodes, edges, isOrdered))
+        story.chapters.push(format_chapter(chapter, index, nodes, edges))
     })
 
     console.log(story)
@@ -148,17 +146,19 @@ const get_next_chapter = (chapters: Node[], edges: Edge[], previous_chapter: Nod
 }
 
 
-const format_chapter = (chapter: Node, index: Number, nodes: Node[], edges: Edge[], isOrdered: boolean) => {
+const format_chapter = (chapter: Node, index: number, nodes: Node[], edges: Edge[]) => {
     const dynamics = get_chapter_dynamics(nodes, chapter)
     const events = get_chapter_events(nodes, edges, dynamics, chapter)
     return {
-        id: isOrdered ? index : null,
+        id: index+1,
         image: chapter.data.image,
         events: events
     }
 }
 
 export {
-    get_story_data
+    get_story_data,
+    get_subjects,
+    get_objects
 }
 

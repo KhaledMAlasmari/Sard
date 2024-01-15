@@ -17,14 +17,20 @@ const NewNodeCreator: React.FC<NewNodeCreatorProps> = () => {
                 >
                     <img src="icons/character.png" />
                 </div>
-
-                <div
-                    className="flex items-center justify-center w-12 h-12 rounded-lg cursor-pointer"
-                    draggable
-                    onDragStart={(event) => onDragStart(event, JSON.stringify({ type: "new", node_info: { type: "chapter", data: { name: null, image: null } } }))}
-                >
-                    <img src="icons/chapter.png" />
-                </div>
+                {
+                    // chapter icon
+                    /*
+                                            
+            <div
+                className="flex items-center justify-center w-12 h-12 rounded-lg cursor-pointer"
+                draggable
+                onDragStart={(event) => onDragStart(event, JSON.stringify({ type: "new", node_info: { type: "chapter", data: { name: null, image: null } } }))}
+            >
+                <img src="icons/chapter.png" />
+            </div>
+                    
+                    */
+                }
                 <div
                     className="flex items-center justify-center w-12 h-12 rounded-lg cursor-pointer"
                     draggable
