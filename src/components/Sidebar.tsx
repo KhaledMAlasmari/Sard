@@ -29,7 +29,7 @@ const Sidebar = ({ themeState }: props) => {
         <Collapsible onOpenChange={setIsOpen}
             open={isOpen}>
             <Panel position="top-left" style={{ margin: '0px',}}>
-                <CollapsibleTrigger style={isOpen ? { "visibility": "hidden" } : {}} asChild><Button  variant="secondary">Menu</Button></CollapsibleTrigger>
+                <CollapsibleTrigger style={isOpen ? { "visibility": "hidden" } : {}} asChild><Button className="rotate-90 ml-[-1rem] mt-[1rem]"  variant="secondary">Menu</Button></CollapsibleTrigger>
             </Panel>
             <CollapsibleContent className="animate-in slide-in-from-left" >
                 <Panel  position="top-left" style={{ margin: '0px', zIndex: '50001' }} className="flex flex-col bg-gray-900 text-white h-screen w-6/12">
@@ -42,7 +42,7 @@ const Sidebar = ({ themeState }: props) => {
                             <TabsTrigger value="options">Options</TabsTrigger>
                             <TabsTrigger value="story_elements">Elements</TabsTrigger>
                             <TabsTrigger value="events_sorter">Order events</TabsTrigger>
-                            <TabsTrigger value="generated_story">Generated story</TabsTrigger>
+                            <TabsTrigger value="generated_story">My story</TabsTrigger>
                         </TabsList>
                         <TabsContent value="options">
                             <Options />

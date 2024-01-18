@@ -3,6 +3,7 @@ import GenreSelector from './GenreSelector';
 import GenerateStoryButton from './GenerateStoryButton';
 import ClearStateButton from './ClearStateButton';
 import StoryTypeSelector from './StoryTypeSelector';
+import Tutorial from './Tutorial';
 
 interface OptionsProps {
     // Define your component props here
@@ -22,6 +23,9 @@ const Options: React.FC<OptionsProps> = () => {
             <div className='grid grid-cols-2'>
                 <GenerateStoryButton />
                 <ClearStateButton />
+            </div>
+            <div className='flex h-[36rem] justify-center'>
+                <Tutorial />
             </div>
 
         </div>
