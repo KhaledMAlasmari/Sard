@@ -17,19 +17,19 @@ interface TutorialProps {
 
 const Tutorial: React.FC<TutorialProps> = () => {
     const [currentStep, setCurrentStep] = React.useState(0);
+    const [selectedTip, setSelectedTip] = React.useState<{ image: string; title: string; description: string; }>(tutorial.tabs[0]);
     const incrementStep = () => {
         const incremented_step = currentStep + 1;
         const maxStep = tutorial.length - 1;
         const step = incremented_step > maxStep ? maxStep : incremented_step;
         setCurrentStep(step);
-        console.log(step)
-
+        setSelectedTip(tutorial.tabs[step]);
     }
     const decrementStep = () => {
         const decremented_step = currentStep - 1;
         const step = decremented_step < 0 ? 0 : decremented_step;
         setCurrentStep(step);
-        console.log(step)
+        setSelectedTip(tutorial.tabs[step]);
 
     }
     return (
@@ -41,16 +41,16 @@ const Tutorial: React.FC<TutorialProps> = () => {
             </DialogTrigger>
             <DialogContent className='text-white min-w-[650px] !bg-gray-950'>
                 <DialogHeader>
-                    <DialogTitle className='text-white text-center'>{tutorial.tabs[currentStep].title}</DialogTitle>
+                    <DialogTitle className='text-white text-center'>{selectedTip.title}</DialogTitle>
                     <DialogDescription>
                     </DialogDescription>
                 </DialogHeader>
                 <div className='text-white'>
                     <div>
-                        <img className=' w-[600px] min-h-[338px] ' src={tutorial.tabs[currentStep].image} />
+                        <img className=' w-[600px] min-h-[338px] ' src={selectedTip.image} />
                     </div>
                     <div className='m-[10px] h-24 whitespace-pre-line'>
-                        {tutorial.tabs[currentStep].description}
+                        {selectedTip.description}
                     </div>
                 </div>
                 <div className='flex justify-between'>
