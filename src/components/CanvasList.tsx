@@ -20,7 +20,7 @@ const CanvasList: React.FC<CanvasListProps> = () => {
     const changeNodeData = useStore(state => state.changeNodeData)
     const instance = useReactFlow();
     const getNode = useStore(state => state.getNode)
-    const handleImageUpload = (file: File) => {
+    const handleImageUpload = (file: File, canvas: string) => {
         if (acceptedFormats.includes(file.type)) {
             const reader = new FileReader()
 
@@ -28,7 +28,7 @@ const CanvasList: React.FC<CanvasListProps> = () => {
 
             reader.onload = () => {
                 console.log('called: ', reader)
-                changeNodeData(selectedCanvas!, { image: reader.result?.toString() })
+                changeNodeData(canvas!, { image: reader.result?.toString() })
             }
         }
     }
@@ -61,7 +61,7 @@ const CanvasList: React.FC<CanvasListProps> = () => {
                                     <Button onClick={() => { updateSelectedCanvas(canvas) }} variant={selectedCanvas == canvas ? 'default' : 'secondary'}>{`Board ${index + 1}`}</Button>
                                     <div className='flex'>
                                         <img style={{cursor: 'pointer'}} width='28' className='m-1' onClick={() => deleteCurrentCanvas(canvas)} src='./icons/trash.svg' />
-                                        <FileUploader isGreenIcon={false} handleFile={handleImageUpload} />
+                                        <FileUploader isGreenIcon={false} handleFile={(file: File)=> handleImageUpload(file, canvas)} />
                                         <ImageViewer isBlueIcon={false} title='Background' image={getCanvasBackground(canvas)} />
                                     </div>
                                 </div>
