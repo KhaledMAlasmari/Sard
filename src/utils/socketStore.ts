@@ -9,6 +9,7 @@ interface IStoryState {
     stream_output: string
     socketIsOpen: boolean;
     waitingForOutput: boolean
+    generation_progress: number
 }
 
 /*
@@ -24,6 +25,7 @@ const initialState: IStoryState = {
     stream_output: '',
     socketIsOpen: false,
     waitingForOutput: false,
+    generation_progress: 0
 };
 
 /*
@@ -52,6 +54,10 @@ const mutations = (setState: (state: Partial<IStoryState>) => void, getState: ()
         .on("stream_output", (data: {output: string}) => {
             setState({ stream_output: data.output });
         })
+        .on("progress", (data: {progress: number}) => {
+            console.log({data})
+            setState({generation_progress: data.progress})
+        })
 
 
     return {
@@ -62,7 +68,7 @@ const mutations = (setState: (state: Partial<IStoryState>) => void, getState: ()
             }
         },
         resetStory() {
-            setState({ generated_story: null });
+            setState({ generated_story: null, generation_progress: 0});
         }
     };
 };

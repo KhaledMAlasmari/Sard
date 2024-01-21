@@ -33,11 +33,6 @@ type RFState = {
   changeNodeData: (nodeId: string, data: any) => void
   changeNodePosition: (nodeId: string, poistion: XYPosition) => void
   changeNodeWidthHeight: (nodeId: string, width: number, height: number) => void
-  genre: string;
-  availableGenres: string[]
-  //isValidStory: boolean;
-  updateGenre: (genre: string) => void
-  updateAvaliableGenres: (genres: string[]) => void
   updateSelectedCanvas: (canvasId: string) => void
   createNewCanvas: () => void
   getChapters: () => Node[]
@@ -86,8 +81,6 @@ const initialState = {
   edges: initialEdges,
   canvases: initialCanvases,
   selectedCanvas: initialCanvases[0],
-  genre: "",
-  availableGenres: [] as string[],
   storyType: "Free",
   //isValidStory: false,
 }
@@ -189,16 +182,6 @@ const useStore = createWithEqualityFn<RFState>()(
             }
             return node;
           })],
-        });
-      },
-      updateGenre: (genre: string) => {
-        set({
-          genre: genre,
-        });
-      },
-      updateAvaliableGenres: (genres: string[]) => {
-        set({
-          availableGenres: genres,
         });
       },
       updateSelectedCanvas: (canvasId: string) => {

@@ -33,8 +33,8 @@ const CanvasList: React.FC<CanvasListProps> = () => {
         }
     }
     const createNewCanvas = useStore((state) => state.createNewCanvas);
-    const getCanvasBackground = (): string | undefined => {
-        return getNode(selectedCanvas)?.data.image || ''
+    const getCanvasBackground = (canvas: string): string | undefined => {
+        return getNode(canvas)?.data.image || ''
 
     }
     function addNewBoard(): void {
@@ -62,7 +62,7 @@ const CanvasList: React.FC<CanvasListProps> = () => {
                                     <div className='flex'>
                                         <img style={{cursor: 'pointer'}} width='28' className='m-1' onClick={() => deleteCurrentCanvas(canvas)} src='./icons/trash.svg' />
                                         <FileUploader isGreenIcon={false} handleFile={handleImageUpload} />
-                                        <ImageViewer isBlueIcon={false} title='Background' image={getCanvasBackground()} />
+                                        <ImageViewer isBlueIcon={false} title='Background' image={getCanvasBackground(canvas)} />
                                     </div>
                                 </div>
                             )

@@ -12,7 +12,7 @@ const ClearStateButton: React.FC<ClearStateButtonProps> = () => {
     }
     return (
         <div className='flex justify-center items-center w-full'>
-            <button onClick={resetState} className="m-4 bg-red-600 text-white py-2 px-4 rounded-lg  w-[14rem]">Reset</button>
+            <button onClick={resetState} className="bg-red-600 text-white py-2 px-4 rounded-lg w-48">Reset</button>
         </div>
 
     );
