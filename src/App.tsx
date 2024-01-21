@@ -1,12 +1,12 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import Canvas from './Pages/Canvas';
 import { useEffect } from "react";
-import useStore from "./utils/nodeStore";
+import dynamicInfoStore from "./utils/dynamicInfoStore";
 import { get_genres } from "./Services/initialDataProvider";
 
 function App() {
-  const updateAvaliableGenres = useStore((state) => state.updateAvaliableGenres)
-  const updateGenre = useStore((state) => state.updateGenre)
+  const updateAvaliableGenres = dynamicInfoStore((state) => state.updateAvaliableGenres)
+  const updateGenre = dynamicInfoStore((state) => state.updateGenre)
   // initialize states from APIs
   useEffect(() => {
     const fetchData = async () => {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { get_story_data } from '@/utils/story_data_formatter'
 import useStore from '@/utils/nodeStore';
+import dynamicInfoStore from '@/utils/dynamicInfoStore';
 import {
     useStore as useSocketsStore
 } from '@/utils/socketStore';
@@ -23,7 +24,7 @@ interface GenerateStoryButtonProps {
 const GenerateStoryButton: React.FC<GenerateStoryButtonProps> = () => {
     const nodes = useStore((state) => state.nodes)
     const edges = useStore((state) => state.edges)
-    const genre = useStore((state) => state.genre)
+    const genre = dynamicInfoStore((state) => state.genre)
     const storyType = useStore((state) => state.storyType)
     const sendStoryToBackend = useSocketsStore((state) => state.actions.generateStory)
     const resetStory = useSocketsStore((state) => state.resetStory)
@@ -54,7 +55,7 @@ const GenerateStoryButton: React.FC<GenerateStoryButtonProps> = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <div className='flex justify-center items-center w-full'>
-                    <button onClick={generateStory} className="bg-blue-600 text-white py-2 px-4 rounded-lg  w-[14rem] m-4 ">Generate story</button>
+                    <button onClick={generateStory} className="bg-blue-600 text-white py-2 px-4 rounded-lg  w-48 m-4">Generate story</button>
                 </div>
             </DialogTrigger>
             {

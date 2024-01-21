@@ -20,11 +20,9 @@ const Options: React.FC<OptionsProps> = () => {
                 <GenreSelector />
                 <StoryTypeSelector />
             </div>
-            <div className='grid grid-cols-2'>
+            <div className='grid grid-cols-1'>
                 <GenerateStoryButton />
                 <ClearStateButton />
-            </div>
-            <div className='flex h-[36rem] justify-center'>
                 <Tutorial />
             </div>
 

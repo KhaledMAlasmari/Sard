@@ -1,4 +1,5 @@
 import useStore from '@/utils/nodeStore';
+import dynamicInfoStore from '@/utils/dynamicInfoStore';
 import React, { ChangeEvent } from 'react';
 
 interface GenreSelectorProps {
@@ -6,8 +7,8 @@ interface GenreSelectorProps {
 }
 
 const GenreSelector: React.FC<GenreSelectorProps> = () => {
-    const genres = useStore((state) => state.availableGenres)
-    const updateGenreState = useStore((state) => state.updateGenre)
+    const genres = dynamicInfoStore((state) => state.availableGenres)
+    const updateGenreState = dynamicInfoStore((state) => state.updateGenre)
     const updateGenre = (event: ChangeEvent<HTMLSelectElement>) => {
         updateGenreState(event.target.value)
         

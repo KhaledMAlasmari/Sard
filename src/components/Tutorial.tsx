@@ -18,6 +18,12 @@ interface TutorialProps {
 const Tutorial: React.FC<TutorialProps> = () => {
     const [currentStep, setCurrentStep] = React.useState(0);
     const [selectedTip, setSelectedTip] = React.useState<{ image: string; title: string; description: string; }>(tutorial.tabs[0]);
+    const [open, setOpen] = React.useState(localStorage.getItem('readTutorial') ? false: true);
+    React.useEffect(() => {
+        if(open){
+            const isTutorialRead = localStorage.setItem('readTutorial', 'true');
+        }
+      }, [open]);
     const incrementStep = () => {
         const incremented_step = currentStep + 1;
         const maxStep = tutorial.length - 1;
@@ -33,11 +39,13 @@ const Tutorial: React.FC<TutorialProps> = () => {
 
     }
     return (
-        <Dialog>
-            <DialogTrigger className='self-end justify-self-end text-white'>
-                <Button className='w-32 !bg-yellow-500'>
-                    <LightningBoltIcon className="mr-2 h-4 w-4" /> Tutorial
-                </Button>
+        <Dialog open={open} onOpenChange={setOpen} >
+            <DialogTrigger asChild>
+                <div className='flex justify-center'>
+                    <Button className='py-2 px-4 rounded-lg w-48 !bg-yellow-500 text-white -align-center m-4 self-center h-[40px]'>
+                        <LightningBoltIcon className="h-4 w-4" /> Tutorial
+                    </Button>
+                </div>
             </DialogTrigger>
             <DialogContent className='text-white min-w-[650px] !bg-gray-950'>
                 <DialogHeader>
