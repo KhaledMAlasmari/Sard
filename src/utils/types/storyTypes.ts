@@ -39,8 +39,8 @@ type Story = {
 type GeneratedStory = {
     story: {
         chapter_id: number
-        chapter_story: String
-        chapter_prompt: String
+        chapter_story: string
+        chapter_prompt: string
     }[] | null
 }
 

@@ -1,7 +1,7 @@
 import { DownloadIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 
-const DownloadButton = ({ textOutput, label, file_name }: { textOutput: string|undefined, label: string, file_name: string }) => {
+const DownloadButton = ({ textOutput, label, file_name }: { textOutput: string|null, label: string, file_name: string }) => {
     const file = new Blob([textOutput || ""], { type: 'text/plain' });
 
     return (
