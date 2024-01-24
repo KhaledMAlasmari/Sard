@@ -28,18 +28,19 @@ const Sidebar = ({ themeState }: props) => {
     return (
         <Collapsible onOpenChange={setIsOpen}
             open={isOpen}>
-            <Panel position="top-left" style={{ margin: '0px',}}>
-                <CollapsibleTrigger style={isOpen ? { "visibility": "hidden" } : {}} asChild><Button className="rotate-90 ml-[-1rem] mt-[1rem]"  variant="secondary">Menu</Button></CollapsibleTrigger>
+            <Panel position="top-left" style={{ margin: '0px', }}>
+                <CollapsibleTrigger style={isOpen ? { "visibility": "hidden" } : {}} asChild><Button className="rotate-90 ml-[-1rem] mt-[1rem]" variant="secondary">Menu</Button></CollapsibleTrigger>
             </Panel>
             <CollapsibleContent className="animate-in slide-in-from-left" >
-                <Panel  position="top-left" style={{ margin: '0px', zIndex: '50001' }} className="flex flex-col bg-gray-900 text-white h-screen w-6/12">
-                    <div className="h-8">
-                        <button onClick={() => setIsOpen(!isOpen)} className={`absolute top-2 left-2 p-2 rounded-full bg-red-500 hover:bg-red-600 transition-colors`} />
-                    </div>
+                <Panel position="top-left" style={{ margin: '0px', zIndex: '50001' }} className="flex flex-col bg-gray-900 text-white h-screen w-6/12">
+
 
                     <Tabs defaultValue="options">
-                        <TabsList className="flex flex-row content-center justify-center">
-                            <TabsTrigger value="options">Options</TabsTrigger>
+                        <TabsList className="flex flex-row content-center justify-center rounded-none">
+                            <div>
+                                <button onClick={() => setIsOpen(!isOpen)} className={`absolute top-2 left-2 p-2 rounded-full bg-red-500 hover:bg-red-600 transition-colors`} />
+                            </div>
+                            <TabsTrigger value="options">Story structure</TabsTrigger>
                             <TabsTrigger value="story_elements">Elements</TabsTrigger>
                             <TabsTrigger value="events_sorter">Order events</TabsTrigger>
                             <TabsTrigger value="generated_story">My story</TabsTrigger>

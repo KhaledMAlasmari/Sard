@@ -10,10 +10,10 @@ const NodesDuplicator: React.FC<NodesDuplicatorProps> = () => {
     const nodes = Object.values(useNodes().reduce((acc, obj) => ({ ...acc, [obj.data.name]: obj }), {})).sort((a, b) => {return a.type.localeCompare(b.type)})
 
     return (
-        <div className='h-full'>
+        <div className='h-screen'>
             <h1 className="text-2xl font-bold text-center p-1">Created elements</h1>
-            <ScrollArea className='flex flex-row  flex-wrap h-[32rem]'>
-                <div className='flex flex-col items-center justify-center'>
+            <ScrollArea className='flex flex-row  flex-wrap h-5/6'>
+                <div className='flex flex-col items-center justify-center mb-16'>
                     {
                         nodes.map((node) => {
                             // @ts-ignore

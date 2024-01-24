@@ -11,8 +11,8 @@ const ClearStateButton: React.FC<ClearStateButtonProps> = () => {
         useStore.persist.clearStorage()
     }
     return (
-        <div className='flex justify-center items-center w-full'>
-            <button onClick={resetState} className="bg-red-600 text-white py-2 px-4 rounded-lg w-48">Reset</button>
+        <div className='flex justify-center items-center'>
+            <button onClick={resetState} className="bg-red-600 text-black py-2 px-4 rounded-lg w-48">Reset</button>
         </div>
 
     );

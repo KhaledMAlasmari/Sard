@@ -53,14 +53,15 @@ const GenerateStoryButton: React.FC<GenerateStoryButtonProps> = () => {
     return (
         // Add your JSX code here
         <Dialog>
-            <DialogTrigger asChild>
-                <div className='flex justify-center items-center w-full'>
-                    <button onClick={generateStory} className="bg-blue-600 text-white py-2 px-4 rounded-lg  w-48 m-4">Generate story</button>
-                </div>
-            </DialogTrigger>
+            <div className='flex justify-center items-center'>
+                <DialogTrigger asChild>
+                    <button onClick={generateStory} className="bg-blue-500 text-black py-2 px-4 rounded-lg  w-48 m-4">Generate story</button>
+                </DialogTrigger>
+            </div>
+
             {
                 validStory ?
-                    <DialogContent className="sm:max-w-[425px] text-white">
+                    <DialogContent className="sm:max-w-[425px] text-black">
                         <DialogHeader>
                             <DialogTitle>Success</DialogTitle>
                         </DialogHeader>
